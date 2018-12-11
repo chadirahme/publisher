@@ -1,0 +1,153 @@
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+
+<zk>
+<style>
+.red {
+	background-color:red;
+}
+</style>
+
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('sales.CashInvoiceViewModel',type='invoicelist')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+		
+		<hbox>
+		<label value="إختيار المعرض"></label>
+		<listbox  mold="select" width="200px"
+		 model="@load(vm.lstExhibitions)" selectedItem="@bind(vm.selectedExhibitions)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.exhibitionname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		
+		<label value="من"></label>
+		<datebox value="@bind(vm.fromDate)" format="dd/MM/yyyy" hflex="1"></datebox>
+		
+		<label value="إلى"></label>
+		<datebox value="@bind(vm.todate)" format="dd/MM/yyyy" hflex="1"></datebox>
+		
+		
+		<button label="بحث" onClick="@command('viewInvoiceListCommand')"></button>
+		</hbox>
+					
+			<grid model="@bind(vm.lstInvoices)" vflex="1" hflex="1" style="direction: rtl;text-align:center"
+				 width="900px" >
+
+					<auxhead sclass="category-center">
+						<auxheader colspan="1">
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1" value="@bind(vm.filter.invoiceprefix)"
+								onChange="@command('changeInvoiceFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.invoicedate)" onChange="@command('changeInvoiceFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.customerName)" onChange="@command('changeInvoiceFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.invoicetotal)" onChange="@command('changeInvoiceFilter')" />
+						</auxheader>
+						
+						<auxheader colspan="5">
+						</auxheader>
+						
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.createdby)" onChange="@command('changeInvoiceFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.statusName)" onChange="@command('changeInvoiceFilter')" />
+						</auxheader>
+						
+					</auxhead>
+					
+			<columns  sizable="true" style="direction: rtl;text-align:center">		
+           	<column label="إختر" width="60px" />						
+						<column label="رقم الفاتورة" width="70px" sort="auto('invoicenumber')"/>
+						<column label="التاريخ" width="100px" sort="auto('invoicedate')"/>
+						<column label="إسم العميل" sort="auto('customername')" width="120px"/>	
+						
+							<column label="المجموع" sort="auto('invoiceamount')" width="100px"/>	
+							
+							<column label="حسم %" sort="auto('invoicediscount')" width="80px"/>	
+							<column label="حسم خاص" sort="auto('invoicediscount')" width="100px"/>	
+						
+						<column label="المقبوض" sort="auto('invoicetotal')" width="100px"/>		
+						<column label="الدفع" sort="auto('paidamount')" width="100px"/>	
+						<column label="الدفع  بالدولار " sort="auto('paidDollarAmount')" width="80px"/>		
+								
+						<column label="المستخدم" sort="auto('createdby')" width="100px"/>		
+					  <column label="الحالة" sort="auto('statusName')" width="100px"/>		
+           	
+           	
+            </columns>
+            
+         <template name="model" var="each">
+         <row zclass="@bind(each.invoicestatus eq 4 ? 'red' :'')">
+         
+         <button image="/images/rowedit.png" onClick="@command('viewInvoicepopupCommand', row=each)" />
+         <label value="@bind(each.invoicenumber)"  />
+         <label value="@bind(each.invoicedate)" />
+         <label value="@bind(each.customername)" />
+         <label value="@bind(each.invoiceamount)" />
+         <label value="@bind(each.invoicediscountPerc)" />
+         <label value="@bind(each.invoicediscount)" />
+         <label value="@bind(each.invoiceamount)" />
+         <label value="@bind(each.paidIndollar eq 0 ? each.paidamount : 0)" />
+         <label value="@bind(each.paidIndollar eq 1 ?  each.paidDollarAmount : 0)" />
+         <label value="@bind(each.createdby)" />
+         <label value="@bind(each.statusName)" />
+            
+         </row>
+         </template>
+																						
+					
+					
+		<foot height="25px">    
+          <footer label="المجموع"></footer>     
+          <footer label="" span="6"></footer>  
+           
+           <footer>
+          <label value="@bind(c:formatNumber(vm.totalInvoiceListAmount, '###,###,###.00'))" style="font-weight:bold"></label>
+          </footer>
+          
+           <footer>
+          <label value="@bind(c:formatNumber(vm.totalPaidAmount, '###,###,###.00'))" style="font-weight:bold"></label>
+          </footer>
+          
+           <footer>
+          <label value="@bind(c:formatNumber(vm.totalPaidDollarAmount, '###,###,###.00 $'))" style="font-weight:bold"></label>
+          </footer>
+           
+
+                    
+        </foot>	
+        
+					
+				</grid>
+				
+				<hbox hflex="1" pack="center">				
+				 <button label="Excel" onClick="@command('exportInvoiceListToExcel')"></button>
+				</hbox>
+				
+				</vlayout>
+				</center>
+</borderlayout>
+</zk>

@@ -1,0 +1,82 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="onHoldPopUp" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('sales.CashInvoiceViewModel' ,type='payInvoice')"
+		mode="highlighted" title="دفع نقدا" border="normal" position="center,center"
+		closable="true" sizable="true" onCancel="onHoldPopUp.detach()" onOK="@command('onHoldOkCommand')"
+		width="430px" height="400px" style="direction: rtl;text-align:right">
+		
+
+<grid>
+<columns>
+<column width="120px"></column>
+<column width="200px"></column>
+<column hflex="1"></column>
+
+</columns>
+
+<rows>
+
+		<row>
+		<label value="المجموع"></label>
+		<doublebox value="@bind(vm.objCashInvoice.invoiceamount)" hflex="1" format="#,###.##" readonly="true"></doublebox>
+				
+		</row>
+
+		<row>
+		<label value="حسم %"></label>
+		<doublebox value="@bind(vm.objCashInvoice.invoicediscountPerc)" onChange="@command('getTotalInvoice')" hflex="1" format="#,###.##"></doublebox>
+		
+		</row>
+		
+		
+		<row>
+		<label value="حسم خاص"></label>
+		<doublebox value="@bind(vm.objCashInvoice.invoicediscount)" onChange="@command('getTotalInvoice')" hflex="1" format="#,###.##"></doublebox>
+		
+		</row>
+		
+		<row>
+		<label value="الضريبة"></label>
+		<cell>
+		<doublebox value="@bind(vm.objCashInvoice.exhibitionTax)" readonly="true" hflex="1" format="#,###.##"></doublebox>
+		<doublebox value="@bind(vm.objCashInvoice.tax)" readonly="true" hflex="1" format="#,###.##"></doublebox>
+		</cell>
+		</row>
+		
+		<row>
+		<label value="الأجمالي بالعملة المحلية"></label>
+		<doublebox value="@bind(vm.objCashInvoice.invoicetotal)" hflex="1" format="#,###.##"></doublebox>	
+		</row>
+
+		<row>
+		<label value="الأجمالي بالدولار"></label>
+		<doublebox value="@bind(vm.objCashInvoice.invoicetotal / vm.objExhibtion.currencyrate)" hflex="1" format="#,###.## $"></doublebox>	
+		</row>
+		
+		<!-- <row>
+		<label value="الدفع"></label>
+		<doublebox value="@bind(vm.objCashInvoice.paidamount)" hflex="1" format="#,###.##"></doublebox>
+		
+		</row> -->
+		
+		<row>
+		
+		<cell colspan="1">
+		<button label="طباعة" onClick="@command('printInvoiceCommand',silentPrint=false)"></button>		
+		<button label="PDF" onClick="@command('printPDFInvoiceCommand',silentPrint=false)"></button>		
+		
+		
+		</cell>
+		<button label="نقدي" onClick="@command('cashPayCommand')"></button>
+		
+		<button label="نقدي بالدولار" onClick="@command('cashPayInDollarCommand')"></button>
+		
+		</row>
+		
+</rows>
+
+
+</grid>
+</window>
+</zk>

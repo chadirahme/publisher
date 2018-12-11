@@ -1,0 +1,161 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('books.ImportBooksViewModel',type='managment')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+		
+		<grid>
+		<columns>
+		<column width="100px"></column>
+		<column width="230px"></column>
+		<column width="180px"></column>
+		<column width="230px"></column>
+		<column width="100px"></column>
+		<column width="100px"></column>
+		<column></column>
+		</columns>
+		
+		<rows>
+		<row>
+		<label value="إختيار المعرض"></label>
+		<listbox mold="select" width="200px"
+		 model="@load(vm.lstExhibitions)" selectedItem="@bind(vm.selectedExhibitions)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.exhibitionname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		<cell>
+		<hbox>
+		<label value="العملة"></label>
+		<label value="@bind(vm.selectedExhibitions.currencyName)"></label>
+		</hbox>
+		</cell>
+		<cell>
+		<hbox>
+		<label value="سعر الصرف"></label>
+		<label value="@bind(vm.selectedExhibitions.currencyrate)"></label>
+		</hbox>
+		</cell>
+		
+		<cell colspan="2">
+		<hbox>
+		<label value="نسبة الحسم للجمهور"></label>
+		<label value="@bind(vm.selectedAgency.discountaudience)"></label>
+		</hbox>
+		
+		</cell>
+		
+		
+		</row>
+		
+		<row>
+		<label value="إسم الدار"></label>
+		<listbox  mold="select" width="200px"
+		 model="@bind(vm.lstAgency)" selectedItem="@bind(vm.selectedAgency)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.agencyname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		<hbox>
+		<label value="رقم الفاتورة" width="120px"></label>
+		<textbox width="100px" value="@bind(vm.invoiceNumber)"></textbox>
+		</hbox>
+		
+		<hbox>
+		<button label="عرض البيانات" onClick="@command('viewBooksImportListCommand')"></button>
+		<space></space><splitter></splitter>
+		<button label="حساب السعر المحلي" onClick="@command('getLocalPriceCommand')"></button>
+		</hbox>
+		
+		<cell>	
+		<doublebox placeholder="السعر القديم" value="@bind(vm.oldPrice)" hflex="1"></doublebox>		
+						
+		</cell>
+		
+		<cell>
+			
+			<doublebox placeholder="السعر الجديد" value="@bind(vm.newPrice)" hflex="1"></doublebox>			
+				
+		
+		</cell>
+		
+		<button label="استبدال السعر" onClick="@command('replacePriceCommand')"></button>
+		
+		</row>
+		</rows>
+		</grid>
+		
+			
+				<listbox model="@bind(vm.lstManageBooks)" vflex="1">
+					<listhead style="direction: rtl;text-align:center">
+											
+					<listheader label="ISBN" sort="auto('bookCode')" width="100px"/>	
+						<listheader label="اسم الكتاب" sort="auto('bookName')" width="300px"/>	
+						<listheader label="اسم المؤلف" sort="auto('editor')" width="250px"/>	
+						<listheader label="الكمية" sort="auto('quantity')" width="80px"></listheader>
+						<listheader label="السعر الإفرادي $" sort="auto('bookPrice')" width="80px"></listheader>	
+						<listheader label="السعر المحلي" sort="auto('localPrice')" width="80px"></listheader>											
+					   <listheader label="العدد الباقي" sort="auto('remainquantity')" width="80px"></listheader>
+						
+						<!-- <listheader label="تعديل"></listheader>
+						<listheader label="حذف"></listheader> -->
+						
+						
+					</listhead>
+					<template name="model">
+						<listitem>		
+						<listcell>
+								<textbox value="@bind(each.bookCode)"/>
+							</listcell>	
+							<listcell>
+								<textbox value="@bind(each.bookName)"/>
+							</listcell>
+											
+							<listcell>
+								<textbox value="@bind(each.editor)"/>
+							</listcell>						
+						
+							<listcell>
+								<intbox value="@bind(each.quantity)" hflex="1"/>
+							</listcell>	
+							
+							<listcell>
+								<doublebox value="@bind(each.bookPrice)" hflex="1"/>
+							</listcell>	
+							
+							<listcell>
+								<doublebox value="@bind(each.localPrice)" hflex="1"/>
+							</listcell>	
+							
+							<listcell>
+								<intbox value="@bind(each.remainquantity)" hflex="1"/>
+							</listcell>	
+							
+							<!-- <listcell>
+								<button onClick="@command('editImportBookCommand',row=each)" 
+								image="/images/pencil-small.png" width="36px"/>
+							</listcell>
+							
+							<listcell>
+								<button onClick="@command('deleteImportBookCommand',row=each)" 
+								image="/images/delete-small.gif" width="36px"/>
+							</listcell> -->
+							
+						</listitem>
+					</template>
+				</listbox>
+				
+				<hbox hflex="1" pack="center">
+				<button label="حفظ" onClick="@command('saveBooksChanges')"></button>
+				 <button label="Excel" onClick="@command('exportBooksItemsToExcel')"></button>
+				</hbox>
+				</vlayout>
+				</center>
+</borderlayout>
+</zk>

@@ -1,0 +1,100 @@
+<?page title="Publisher" contentType="text/html;charset=UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" ?>
+<zk>
+<style>
+		.z-groupbox-3d-hm { background-image: none; background-color:
+		#2C6F99  !important; } .z-groupbox-3d-header .z-caption { color:
+		white; font-weight: bold;; } .z-groupbox-3d-cnt{
+		background-image: none; background-color: #EAECF0 !important; }
+
+		.open-true {float:right; background:url('/images/up.jpg')
+		no-repeat right 0; height: 16px; padding-right: 20px;
+		font-weight: bold; }
+
+		.open-false {float:right; background:url('/images/up.jpg')
+		no-repeat right 0; height: 16px; padding-right: 20px;
+		font-weight: bold; 
+		}
+		
+		 .defaultMenu{
+		 color:blue;text-decoration:underline;cursor: hand;font-size: 14px;        
+    		}
+    
+     	.selectedMenu{
+		 color:green;text-decoration:underline;cursor: hand;font-size: 14px;cursor:hand;  
+		 
+		}
+
+	</style>
+
+
+<vlayout hflex="1" vflex="1" self="@define(content)" style="direction: rtl;">
+
+	<borderlayout apply="org.zkoss.bind.BindComposer" id="hbaSideBar" vflex="1" hflex="1"
+	viewModel="@id('vm') @init('layout.Pagecomposer')">
+		
+		 <north height="100px" border="none" >
+            <include src="/layout/banner.zul"/>
+        </north>
+        
+        
+          <east title="القوائم"  size="200px" splittable="true" collapsible="true" autoscroll="true" style="direction: ltr;text-align:center">
+                 <include src="/layout/sidebar.zul"/>
+                 
+                 <!-- <vlayout>
+                              
+              <vlayout children="@bind(vm.lstListsMenu) @template(empty each.children?'children':'menu')">
+   			 <template name="children">
+       		 <groupbox >
+       		<a href="">
+                <label value="@bind(each.artitle)" style="color:blue;text-decoration:underline;cursor: hand;" onClick='@command("menuHRClicked", pagename=each)'/>
+                </a>
+       		 </groupbox>
+    		</template>
+    		
+    		 <template name="menu">
+       		 <groupbox   closable="true" mold="3d" sclass="sidebar" open="@load(each.title eq 'Setup')">
+       		 <caption label="@bind(each.artitle)"></caption>
+       		        		        						
+		 		<grid model="@bind(each.children)">
+               <columns>
+               <column></column>
+               </columns>
+                <template name="model">
+            	<row>
+            
+              	<a href="">
+                <label value="@bind(each.artitle)" sclass="@bind(each.sclassName)" 
+                 onClick='@command("menuHRClicked", pagename=each, label=self)'/>
+                </a>
+               
+                </row>
+                </template>
+               </grid>
+       		 
+       		 
+       		 </groupbox>
+    		
+    		</template>
+    		
+			</vlayout>
+		</vlayout> -->
+            </east>
+            
+            
+           
+<center autoscroll="true" hflex="1">
+<tabbox vflex="1" id="mainContentTabbox">
+		<tabs id="contentTabs" ></tabs>
+	<tabpanels id="contentTabpanels"></tabpanels>
+		</tabbox>
+</center>
+
+<south height="50px" border="none">
+         
+        </south>
+</borderlayout>
+</vlayout>
+
+</zk>

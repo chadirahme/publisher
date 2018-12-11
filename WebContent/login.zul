@@ -1,0 +1,66 @@
+<?page title="Publisher" contentType="text/html;charset=UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" ?>
+
+<zk>
+
+
+<window id="winOne" title="الدخول" border="normal" position="center,center" mode="overlapped" style="margin-left:0px;direction: rtl;"
+onOK="@command('loginCommand')" apply="org.zkoss.bind.BindComposer"  onCreate="test()"
+  	viewModel="@id('vm') @init('login.AuthenticateViewModel')">
+  	
+    	    
+	<hbox hflex="1"  align="center" pack="center" spacing="20px" width="400px">
+  		
+  			
+  				<grid style="font-size:16px">
+				<columns>
+					
+					<column width="100px" />
+					<column width="200px"/>
+					
+					
+				</columns>
+				<rows>
+				
+				
+				
+					<row>
+					<label value="إسم المستخدم" zclass="loginlabel"></label>
+					<textbox id="txtName" value="@load(vm.dbUser.username) @save(vm.dbUser.username, before='loginCommand')"
+					  placeholder="Username" hflex="1" onFocus='self.setValue("")'  constraint="no empty:*" />
+					</row>
+					<row>
+					<label value="كلمة السر"  zclass="loginlabel"></label>
+					<textbox  type="password" value="@load(vm.dbUser.userpassword) @save(vm.dbUser.userpassword, before='loginCommand')" 
+					 placeholder="Password" hflex="1"  onFocus='self.setValue("")'
+					constraint="no empty:*"/>
+					</row>
+					<row>
+						<cell colspan="2" align="center">
+							<vlayout>
+								<button label="الدخول" 	onClick="@command('loginCommand')" width="100px"></button>
+								<label id="mesg" value="@bind(vm.message)" style="color:red;font-size:14px"/>
+							</vlayout>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+			
+			</hbox>
+			
+				<zscript><![CDATA[  
+      void test()
+     {
+    	 //alert("dd");
+    	//txtName.setValue("");       
+     }
+     	
+     	 //alert(txtName.getValue());
+        //winOne.setTitle("given by zscript");             
+    ]]>
+    </zscript>   
+		
+</window>
+
+</zk>

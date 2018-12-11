@@ -1,0 +1,89 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="ItemsPopUp" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('sales.BooksPopupViewModel' ,type='items')"
+		mode="highlighted" title="Books Popup" border="normal" position="center,center"
+		closable="true" sizable="true" onCancel="ItemsPopUp.detach()" onOK="@command('onOkCommand')"
+		width="1100px" height="400px">
+	<vlayout hflex="1" vflex="1">
+
+		<listbox model="@bind(vm.lstBooks)" vflex="1" hflex="1" selectedItems="@bind(vm.selectedBooks)" checkmark="true" multiple="true"
+				 width="900px" height="500px"
+					>
+
+					<auxhead sclass="category-center">
+					<auxheader colspan="1" label="" width="50px">
+							</auxheader>
+						<auxheader colspan="1">
+						</auxheader>
+						
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1" value="@bind(vm.filter.bookCode)"
+								onChange="@command('changeFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.bookName)" onChange="@command('changeFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.bookEditor)" onChange="@command('changeFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.bookAuthor)" onChange="@command('changeFilter')" />
+						</auxheader>
+						
+						
+						
+					</auxhead>
+					<listhead menupopup="auto" sizable="true">
+						<listheader label="Check" width="70px"/>
+						<listheader label="إختر" width="60px" />
+						<listheader label="ISBN" sort="auto('bookCode')" width="120px"/>
+						<listheader label="إسم الكتاب" sort="auto('bookName')" width="280px"/>	
+						<listheader label="إسم المؤلف" sort="auto('editor')" width="180px"/>	
+						<listheader label="إسم الناشر" sort="auto('author')" width="120px"/>	
+						
+						<listheader label="السعر الإفرادي" hflex="1"></listheader> 
+						<listheader label="العدد الباقي" sort="auto('bookName')" hflex="1"/>
+					</listhead>
+					<template name="model">
+						<listitem>
+						<listcell ></listcell>
+							<listcell>
+			   			<button image="/images/rowedit.png" onClick="@command('selectdBookCommand', row=each)" />
+							</listcell>
+							<listcell>
+								<label value="@bind(each.bookCode)" 
+								 />
+							</listcell>
+							<listcell>
+								<label value="@bind(each.bookName)" />
+							</listcell>
+							<listcell>
+								<label value="@bind(each.editor)" />
+							</listcell>
+							<listcell>
+								<label value="@bind(each.author)" />
+							</listcell>
+								<listcell>
+								<label value="@bind(each.localPrice)" />
+							</listcell>
+						<listcell>
+								<label value="@bind(each.remainquantity)" />
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+				<hbox hflex="1" pack="center">
+				<button label="اختار" onClick="@command('selectBooksCommand')"></button>
+				</hbox>
+				
+				</vlayout>
+</window>
+</zk>

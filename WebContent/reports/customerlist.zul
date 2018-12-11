@@ -1,0 +1,82 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('reports.CustomerViewModel',type='list')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+		<hbox>
+		<label value="البلد"></label>
+<listbox hflex="1" mold="select"
+		model="@load(vm.lstCountry)" selectedItem="@bind(vm.selectedCountry)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.countryname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		<button label="إضافة عميل" onClick="@command('addNewCustomerCommand')"></button>
+		
+		</hbox>
+			
+			
+				<listbox model="@bind(vm.lstCustomers)" selectedItem="@bind(vm.selectedCustomer)"  vflex="1">
+					<listhead style="direction: rtl;text-align:right">
+											
+						<listheader label="إسم العميل" sort="auto('customername')"/>	
+						<listheader label="رقم التلفون" sort="auto('mobile')"/>
+						<listheader label="البريد الإلكتروني" sort="auto('email')"/>
+						<listheader label="البلد" sort="auto('countryName')"/>							
+						<listheader label="المدينة" sort="auto('cityName')"/>															
+						<listheader label="العنوان" hflex="min"/>
+						<listheader label="ملاحظات"></listheader>
+						<listheader label="خاص"></listheader>
+						<listheader label="تعديل"></listheader>
+						<listheader label="حذف"></listheader>
+						
+					</listhead>
+					<template name="model">
+						<listitem>		
+						<listcell>
+								<label value="@bind(each.customername)"/>
+							</listcell>	
+							<listcell>
+								<label value="@bind(each.mobile)"/>
+							</listcell>
+											
+							<listcell>
+								<label value="@bind(each.email)"/>
+							</listcell>						
+							<listcell>
+								<label value="@bind(each.countryName)"/>
+							</listcell>		
+							<listcell>
+								<label value="@bind(each.cityName)"/>
+							</listcell>		
+							<listcell>
+								<label value="@bind(each.address)"/>
+							</listcell>								
+							<listcell>
+								<label value="@bind(each.notes)"/>
+							</listcell>								
+							<listcell>
+								<label value="@bind(each.special)"/>
+							</listcell>	
+							
+							<listcell>
+								<button onClick="@command('editCustomerCommand',todo=each)" 
+								image="/images/pencil-small.png" width="36px"/>
+							</listcell>
+							
+							<listcell>
+								<button onClick="@command('deleteCommand',todo=each)" 
+								image="/images/delete-small.gif" width="36px"/>
+							</listcell>
+							
+						</listitem>
+					</template>
+				</listbox>
+				</vlayout>
+				</center>
+</borderlayout>
+</zk>

@@ -1,0 +1,51 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:w="client">
+ <zscript language="Java"><![CDATA[
+	import java.io.*;
+	import org.zkoss.util.media.AMedia;
+	String invoicePath = (String) arg.get("invoicePath");
+	String sFile = (String) arg.get("File");
+]]>
+</zscript> 
+<window id="pdfwindow" width="80%" height="80%" title="PDF-Viewer" border="normal" mode="modal" 
+		closable="true" maximizable="true"  onClose="close()">
+		<iframe id="pdfwindow_iframe" height="100%" width="100%" />
+		
+	<zscript language="Java"><![CDATA[
+
+	void show(Iframe report)throws Exception{                                  
+		File f = new File(invoicePath);//"c:/temp/invoicePDFWebApplication.pdf");
+		byte[] buffer = new byte[ (int) f.length() ]; 
+		FileInputStream fs = new FileInputStream(f);
+		fs.read( buffer ); 
+		fs.close();
+    	
+		ByteArrayInputStream is=new ByteArrayInputStream(buffer);
+   		AMedia amedia =new AMedia(sFile, "pdf", "application/pdf", is);
+   		report.setContent(amedia);
+   		
+   		//report.setFocus(true);
+   		
+	}
+
+	void close(){
+		pdfwindow.detach();
+	}
+
+	show(pdfwindow_iframe);
+	
+
+]]>
+</zscript>
+
+<script>
+
+</script>
+function print()
+{
+window.frames["pdfwindow_iframe"].focus();
+window.frames["pdfwindow_iframe"].print();
+}
+</window>
+
+</zk>

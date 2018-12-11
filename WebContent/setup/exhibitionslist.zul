@@ -1,0 +1,88 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('setup.SetupViewModel',type='exhibitionslist')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+		
+		<hbox>
+		<label value="البلد"></label>
+		<listbox hflex="1" mold="select"
+		model="@load(vm.lstCountry)" selectedItem="@bind(vm.selectedCountry)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.countryname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		<button label="إضافة معرض" onClick="@command('addNewExhibitionsCommand')"></button>
+		
+		</hbox>
+			
+			
+				<listbox model="@bind(vm.lstExhibitions)" selectedItem="@bind(vm.objExhibitions)"  vflex="1">
+					<listhead style="direction: rtl;text-align:center">
+											
+						<listheader label="اسم المعرض" sort="auto('exhibitionname')" width="200px"/>	
+						<listheader label="من" sort="auto('fromdate')"/>					
+						<listheader label="إلى" sort="auto('todate')"/>							
+						<listheader label="البلد" sort="auto('countryName')"/>															
+						<listheader label="المدينة" hflex="min" sort="auto('cityName')"/>
+						<listheader label="اسم الشخص المسؤول" sort="auto('contactname')"></listheader>
+						<listheader label="رقم التلفون" sort="auto('contactmobile')"></listheader>
+						<listheader label="فعال" hflex="min" sort="auto('isactive')"/>
+						<listheader label="تعديل"></listheader>
+						<listheader label="حذف"></listheader>
+						
+						
+					</listhead>
+					<template name="model">
+						<listitem>		
+						<listcell>
+								<label value="@bind(each.exhibitionname)"/>
+							</listcell>	
+							<listcell>
+								<label value="@bind(each.fromdate)"/>
+							</listcell>
+											
+							<listcell>
+								<label value="@bind(each.todate)"/>
+							</listcell>						
+							<listcell>
+								<label value="@bind(each.countryName)"/>
+							</listcell>		
+							<listcell>
+								<label value="@bind(each.cityName)"/>
+							</listcell>	
+							<listcell>
+								<label value="@bind(each.contactname)"/>
+							</listcell>	
+														
+							<listcell>
+								<label value="@bind(each.contactmobile)"/>
+							</listcell>	
+							
+							
+							<listcell>
+								<button onClick="@command('activeExhibitionsCommand',todo=each)" 
+								image="@bind(each.isactive? '/images/success.gif' : '/images/delete-small.gif')" width="36px" />
+							</listcell>
+							
+							<listcell>
+								<button onClick="@command('editExhibitionsCommand',todo=each)" 
+								image="/images/pencil-small.png" width="36px"/>
+							</listcell>
+							
+							<listcell>
+								<button onClick="@command('deleteExhibitionsCommand',todo=each)" 
+								image="/images/delete-small.gif" width="36px"/>
+							</listcell>
+							
+						</listitem>
+					</template>
+				</listbox>
+				</vlayout>
+				</center>
+</borderlayout>
+</zk>

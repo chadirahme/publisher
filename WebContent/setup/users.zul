@@ -1,0 +1,63 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('setup.SetupViewModel',type='users')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+			<button label="إضافة مستخدم" onClick="@command('addNewUserCommand')"></button>
+			
+				<listbox model="@bind(vm.lstUsers)" selectedItem="@bind(vm.selectedUser)"  vflex="1">
+					<listhead style="direction: rtl;text-align:right">
+											
+						<listheader label="إسم المسخدم" sort="auto('username')"/>	
+						<listheader label="كلمة السر" sort="auto('supervisor')"/>
+						<listheader label="إسم الموظف" sort="auto('firstname')"/>
+						<listheader label="الدور" sort="auto('roleName')"/>							
+						<listheader label="مدير" sort="auto('adminuser')"/>															
+						<listheader label="فعال" hflex="min"/>
+						<listheader label="تعديل"></listheader>
+						<listheader label="حذف"></listheader>
+						
+					</listhead>
+					<template name="model">
+						<listitem>		
+						<listcell>
+								<label value="@bind(each.username)"/>
+							</listcell>	
+							<listcell>
+								<label value="@bind(each.userpassword)"/>
+							</listcell>
+											
+							<listcell>
+								<label value="@bind(each.firstname)"/>
+							</listcell>						
+							<listcell>
+								<label value="@bind(each.roleName)"/>
+							</listcell>		
+							<listcell>
+								<label value="@bind(each.isadmin ? 'Admin' : '')"/>
+							</listcell>	
+														
+							<listcell>
+								<button onClick="@command('activeCommand',todo=each)" 
+								image="@bind(each.isactive? '/images/success.gif' : '/images/delete-small.gif')" width="36px" visible="@bind(!each.isadmin)"/>
+							</listcell>
+							
+							<listcell>
+								<button onClick="@command('editUserCommand',todo=each)" 
+								image="/images/pencil-small.png" width="36px"/>
+							</listcell>
+							
+							<listcell>
+								<button onClick="@command('deleteCommand',todo=each)" 
+								image="/images/delete-small.gif" width="36px" visible="@bind(!each.isadmin)"/>
+							</listcell>
+							
+						</listitem>
+					</template>
+				</listbox>
+				</vlayout>
+				</center>
+</borderlayout>
+</zk>

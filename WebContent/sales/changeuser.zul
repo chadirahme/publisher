@@ -1,0 +1,43 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="changeUserDialog"  border="normal" title="تغير المسخدم"  width="400px" height="250px" closable="true" sizable="true"
+		apply="org.zkoss.bind.BindComposer" mode="highlighted" 
+		viewModel="@id('vm') @init('sales.ChangeUserViewModel',type='user')"
+		onCancel="changeUserDialog.detach()" style="direction: rtl;text-align:right">
+		
+<vlayout >
+<grid>
+<columns>
+<column width="100px"></column>
+<column width="200px"></column>
+</columns>
+
+<rows>
+<row>
+<label value="إسم المسخدم"></label>
+<textbox value="@bind(vm.objChangeUser.username)"  constraint="no empty:*" hflex="1"></textbox>
+
+
+</row>
+
+
+<row>
+<label value="كلمة السر" ></label>
+<textbox type="password" value="@bind(vm.objChangeUser.userpassword)" hflex="1"></textbox>
+</row>
+
+<row>
+<cell colspan="2">
+<hbox hflex="1" pack="center">
+<button label="حفظ" onClick="@command('applyChangeUserCommand')"></button>
+<button label="إغلاق" onClick="changeUserDialog.detach()"></button>
+</hbox>
+</cell>
+</row>
+</rows>
+</grid>
+
+</vlayout>
+
+</window>
+</zk>

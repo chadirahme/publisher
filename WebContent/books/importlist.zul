@@ -1,0 +1,66 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('books.ImportBooksViewModel',type='importlist')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+		
+		<hbox>
+		<label value="إختيار المعرض"></label>
+		<listbox hflex="1" mold="select"
+		 model="@load(vm.lstExhibitions)" selectedItem="@bind(vm.selectedExhibitions)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.exhibitionname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		
+		<button label="بحث" onClick="@command('viewImportListCommand')"></button>
+		</hbox>					
+			<button label="إضافة الكتب" onClick="@command('openImportBookCommand')"></button>
+			
+				<listbox model="@bind(vm.lstImportBook)" vflex="1">
+					<listhead style="direction: rtl;text-align:right">
+											
+						<listheader label="إسم الدار" sort="auto('agencyName')"/>	
+						<listheader label="رقم الفاتورة" sort="auto('invoicenumber')"/>					
+						<listheader label="تاريخ الإستيراد" sort="auto('importDate')"/>													
+						<listheader label="تعديل"></listheader>
+						<listheader label="حذف"></listheader>
+						
+						
+					</listhead>
+					<template name="model">
+						<listitem>		
+						<listcell>
+								<label value="@bind(each.agencyName)"/>
+							</listcell>	
+							<listcell>
+								<label value="@bind(each.invoicenumber)"/>
+							</listcell>
+											
+							<listcell>
+								<label value="@bind(each.importDate)"/>
+							</listcell>						
+						
+							
+							
+							<listcell>
+								<button onClick="@command('editImportBookCommand',row=each)" 
+								image="/images/pencil-small.png" width="36px"/>
+							</listcell>
+							
+							<listcell>
+								<button onClick="@command('deleteImportBookCommand',row=each)" 
+								image="/images/delete-small.gif" width="36px"/>
+							</listcell>
+							
+						</listitem>
+					</template>
+				</listbox>
+				</vlayout>
+				</center>
+</borderlayout>
+</zk>

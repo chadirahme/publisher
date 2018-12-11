@@ -1,0 +1,73 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="unpaidDialog"  border="normal" title="الزبائن"  width="600px" height="350px" closable="true" sizable="true"
+		apply="org.zkoss.bind.BindComposer" mode="highlighted" 
+		viewModel="@id('vm') @init('sales.CashInvoiceViewModel',type='unpaid')"
+		onCancel="unpaidDialog.detach()" style="direction: rtl;text-align:right">
+		
+<vlayout >
+<grid>
+<columns>
+<column width="100px"></column>
+<column width="200px"></column>
+<column width="100px"></column>
+<column width="150px"></column>
+</columns>
+
+<rows>
+<row>
+<label value="إسم العميل"></label>
+<textbox value="@bind(vm.objCashInvoice.customername)"  constraint="no empty:*" hflex="1"></textbox>
+
+<label value="رقم الفاتورة"></label>
+<textbox value="@bind(vm.objCashInvoice.invoiceprefix)"></textbox>
+</row>
+
+<row>
+<label value="قيمة الفاتورة" ></label>
+<doublebox value="@bind(vm.objCashInvoice.invoicetotal)" constraint="no empty:*" hflex="1"></doublebox>
+
+
+</row>
+
+
+<row>
+<label value="قيمة الدفعة"></label>
+<doublebox value="@bind(vm.objCashInvoice.paidamount)"  hflex="1" onChange="@command('getbalanceAmount')"></doublebox>
+</row>
+
+<row>
+<label value="الرصيد الباقي"></label>
+<doublebox value="@bind(vm.objCashInvoice.balanceamount)"  hflex="1"></doublebox>
+</row>
+
+<row>
+<label value="التاريخ المتوقع للدفع"></label>
+<textbox value="@bind(vm.objCashInvoice.dateofpay)"  constraint="no empty:*" hflex="1"></textbox>
+</row>
+
+<row>
+<label value="ملاحظات"></label>
+<cell colspan="3">
+<textbox value="@bind(vm.objCashInvoice.notes)" hflex="1" rows="3"></textbox>
+</cell>
+</row>
+
+
+
+
+<row>
+<cell colspan="4">
+<hbox hflex="1" pack="center">
+<button label="حفظ" onClick="@command('saveUnpiadCommand')"></button>
+<button label="إغلاق" onClick="unpaidDialog.detach()"></button>
+</hbox>
+</cell>
+</row>
+</rows>
+</grid>
+
+</vlayout>
+
+</window>
+</zk>

@@ -1,0 +1,286 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<zk>
+<window id="exhibtionsDialog" apply="org.zkoss.bind.BindComposer" mode="highlighted" title="exhibitions" 
+border="normal" position="center,center" closable="true"
+viewModel="@id('vm') @init('setup.SetupViewModel' ,type='exhibitions')"  sizable="true"
+
+onCancel="exhibtionsDialog.detach()"
+ width="1320px" height="750px">
+ 
+<borderlayout>
+		<center autoscroll="true" border="normal">
+		<vlayout hflex="1">
+		
+		<grid style="direction: rtl;text-align:right"
+		form="@id('fx') @load(vm.objExhibitions) @save(vm.objExhibitions, before='saveExhibitionsCommand')">
+		<columns>
+		<column width="100px"></column>
+		<column width="200px"></column>
+		<column width="100px"></column>
+		<column width="200px"></column>
+		<column width="100px"></column>
+		<column width="200px"></column>
+		<column></column>
+		</columns>
+		
+		<rows>
+		
+		<row>
+		<label value="اسم المعرض"></label>
+		<textbox hflex="1" value="@bind(fx.exhibitionname)"></textbox>
+		
+		<label value="تاريخ المعرض"></label>
+		<cell colspan="3">
+		<hbox>
+		<label value="من"></label>
+		<datebox hflex="1" value="@bind(fx.fromdate)" format="dd/MM/yyyy"></datebox>
+		<label value="إلى"></label>
+		<datebox hflex="1" value="@bind(fx.todate)" format="dd/MM/yyyy"></datebox>
+		</hbox>
+		</cell>
+	
+		
+		</row>
+		
+		<row>
+		<label value="اسم الشخص المسؤول"></label>
+		<textbox hflex="1" value="@bind(fx.contactname)"></textbox>
+		
+		<label value="البلد"></label>
+		<listbox hflex="1" mold="select"
+		model="@load(vm.lstCountry)" selectedItem="@bind(vm.selectedCountry)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.countryname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+											
+		<label value="المدينة"></label>
+		<listbox hflex="1" mold="select"
+		model="@load(vm.lstCity)" selectedItem="@bind(vm.selectedCity)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.cityname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		</row>
+		
+		
+		<row>
+		<label value="رقم التلفون"></label>
+		<textbox hflex="1" value="@bind(fx.contactmobile)"></textbox>
+		
+		<label value="البريد الإلكتروني"></label>
+		<textbox value="@bind(fx.contactemail)" hflex="1"></textbox>
+		</row>
+		
+		
+		<row>
+		<label value="تاريخ الشحن"></label>
+			<datebox hflex="1" format="dd/MM/yyyy" value="@bind(fx.transferdate)"> </datebox>
+			
+			<label value="نسبة الحسم للجمهور"></label>
+		<doublebox value="@bind(fx.discountaudience)"></doublebox>
+		
+		<label value="نسبة الحسم للجملة"></label>
+		<doublebox value="@bind(fx.discounttotal)"></doublebox>
+		
+		<cell>
+		<label value="الضريبة"></label>
+		<doublebox value="@bind(fx.tax)"></doublebox>
+		</cell>
+		
+		</row>
+		
+		<row>
+		<label value="العملة"></label>
+		<listbox hflex="1" mold="select"
+		model="@load(vm.lstCurrency)" selectedItem="@bind(vm.selectedCurrency)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.currencyname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		
+		<label value="سعر الصرف"></label>
+		<doublebox value="@bind(vm.selectedCurrency.rate)"></doublebox>
+		
+		<label value="رمز العملة"></label>
+		<textbox value="@bind(vm.selectedCurrency.currencysymbol)" width="100px"></textbox>
+		
+		</row>
+		
+		<row>
+		<label value="Serail Number"></label>
+		<textbox value="@bind(fx.serialnumber)" hflex="1"></textbox>
+		<label value="Prefix"></label>
+		<textbox value="@bind(fx.prefix)" hflex="1"></textbox>
+		
+		<cell colspan="4" rowspan="4" valign="top">
+		<vlayout>
+		<groupbox>
+        <caption sclass="folder" label="التوكيلات" />
+        <vlayout>
+        <button label="Add" onClick="@command('addAgencyCommand')"></button>
+         <listbox height="200px"  sizedByContent="false" emptyMessage="No data found"
+					model="@bind(vm.lstAgency)">
+					
+					<listhead sizable="true">
+					<listheader label="إسم الدار" width="100px"></listheader>
+					<listheader label="رقم الفاتورة" width="70px"></listheader>
+					<listheader label="قيمة الفاتورة" width="70px"></listheader>
+					<listheader label="عدد الطرود" width="70px"/>					
+					<listheader label="نسبة الحسم" width="70px" />	
+					<listheader label="الحسم للجمهور" width="80px" />		
+					<listheader label="تعديل" />
+					<listheader label="حذف" />	
+					</listhead>
+					
+					<template name="model" var="item">
+						<listitem>
+						<listcell label="@bind(item.agencyname)" />
+						<listcell label="@bind(item.invoicenumber)" />						
+							<listcell label="@bind(c:formatNumber(item.invoiceamount ,'$#,###.##'))" />							
+							<listcell label="@bind(c:formatNumber(item.boxquantity ,'#,###'))" />
+							<listcell label="@bind(item.discountpercentage)"  />
+							<listcell label="@bind(item.discountaudience)"  />
+																			  							 
+							  	<listcell>
+							
+							<a href="" onClick="@command('editSelectedAgencyCommand' ,row=item)" style="font-weight:bold">تعديل</a>
+							</listcell>
+							
+								<listcell>
+							
+							<a href="" onClick="@command('deleteSelectedAgencyCommand' ,row=item)" style="font-weight:bold">حذف</a>
+							</listcell>
+
+						</listitem>
+					</template>
+					</listbox>
+                         
+         </vlayout>
+        </groupbox>
+		
+		<groupbox>
+        <caption sclass="folder" label="أرقام تلفون مهمة" />
+         <vlayout>
+        <button label="Add" onClick="@command('addContactCommand')"></button>
+        <listbox height="200px"  sizedByContent="false" emptyMessage="No data found"
+					model="@bind(vm.lstExhibitionContact)">
+					
+					<listhead sizable="true">
+					<listheader label="إسم الشخص" width="150px"></listheader>
+					<listheader label="تلفون" width="80px"></listheader>
+					<listheader label="إيميل" width="80px"></listheader>
+					<listheader label="ملاحظات" width="80px"/>					
+					
+						<listheader label="تعديل" />
+					<listheader label="حذف" />	
+					</listhead>
+					
+					<template name="model" var="item">
+						<listitem>
+						<listcell label="@bind(item.contactname)" />
+						<listcell label="@bind(item.contactphone)" />						
+						<listcell label="@bind(item.email)" />	
+						<listcell label="@bind(item.note)" />	
+																			  							 
+							  	<listcell>
+							
+							<a href="" onClick="@command('editSelectedContactCommand' ,row=item)" style="font-weight:bold">تعديل</a>
+							</listcell>
+							
+								<listcell>
+							
+							<a href="" onClick="@command('deleteSelectedContactCommand' ,row=item)" style="font-weight:bold">حذف</a>
+							</listcell>
+
+						</listitem>
+					</template>
+					</listbox>
+        </vlayout>
+        </groupbox>
+		
+		</vlayout>
+		</cell>
+		</row>
+		
+		
+		<row>
+		<cell colspan="3">
+		 <groupbox >
+                <caption sclass="folder" label="الاشتراك" />
+		
+		<label value="الامتار"></label>
+		<doublebox value="@bind(fx.meterreserver)"></doublebox>
+		<label value="سعر المتر"></label>
+		<doublebox value="@bind(fx.meterprice)"></doublebox>
+		
+		<label value="="></label>
+		<doublebox value="@bind(fx.meterreserver * fx.meterprice)" readonly="true"></doublebox>
+		</groupbox>
+		</cell>
+		</row>
+		
+		
+		<row>
+		<cell colspan="3">
+		 <groupbox >
+         <caption sclass="folder" label="المندوبين" />
+		<vlayout>
+		<hbox>
+		<label value="1"></label>
+		<textbox value="@bind(fx.mandoob1)"></textbox>
+		</hbox>
+		
+		<hbox>
+		<checkbox label="Visa" checked="@bind(fx.mandoob1visa)"></checkbox>
+		<checkbox label="Reserver" checked="@bind(fx.mandoob1ticket)"></checkbox>
+		</hbox>
+		
+		<hbox>
+		<label value="2"></label>
+		<textbox value="@bind(fx.mandoob2)"></textbox>
+		</hbox>
+		
+		<hbox>
+		<checkbox label="Visa" checked="@bind(fx.mandoob2visa)"></checkbox>
+		<checkbox label="Reserver" checked="@bind(fx.mandoob2ticket)"></checkbox>
+		</hbox>
+		
+		</vlayout>
+		</groupbox>
+		</cell>
+		</row>
+		
+		<row>
+		<cell colspan="4">
+		<textbox value="@bind(fx.notes)" rows="3" hflex="1" placeholder="General notes"></textbox>
+		</cell>
+		
+		
+		</row>
+		
+		<row>
+		<cell colspan="7">
+		<hbox pack="center" hflex="1">
+	
+		<button label="حفظ" onClick="@command('saveExhibitionsCommand')"></button>
+		<button label="إغلاق" onClick="exhibtionsDialog.detach()"></button>
+		
+		</hbox>
+		</cell>
+		</row>
+		</rows>
+		
+		</grid>
+		</vlayout>
+		</center>
+		</borderlayout>
+	</window>	
+</zk>

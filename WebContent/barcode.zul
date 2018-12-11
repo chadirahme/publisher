@@ -1,0 +1,7 @@
+<zk xmlns:w="client">
+  
+  <textbox onOK="txt2.setFocus(true)" id="txt"  />
+  <textbox id="txt23" value="111"></textbox>
+  <textbox id="txt2" value="222"></textbox>
+  <button id="test" label="click me to change value and updateChange_" w:onClick="var t = zk.Widget.$('$txt');t.$n().value=('test2');t.updateChange_();" />
+</zk>

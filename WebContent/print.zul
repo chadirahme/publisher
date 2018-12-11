@@ -1,0 +1,83 @@
+<?page title="POS - Print" contentType="text/html;charset=UTF-8"?>
+<zk>
+
+<window id="winOne" title="Print" border="normal" apply="org.zkoss.bind.BindComposer"
+  	viewModel="@id('vm') @init('reports.PrintViewModel')">
+  	
+    	    
+	<hbox hflex="1"  align="center" pack="center" spacing="20px" width="400px">
+  		
+  			
+  				<grid style="font-size:16px">
+				<columns>
+					
+					<column width="100px" />
+					<column width="500px"/>
+					<column width="100px" />
+					<column width="500px"/>
+					
+				</columns>
+				<rows>							
+				
+					<row>
+					<label value="Invoice" zclass="loginlabel"></label>
+					<textbox  rows="20" hflex="1" width="200" id="txtName" value="@bind(vm.invoice)"
+					  constraint="no empty:*" />
+					  
+					  <label value="Printer Name" zclass="loginlabel"></label>
+					<textbox  rows="20" hflex="1" width="200"  value="@load(vm.printerName)"
+					  constraint="no empty:*" />
+					  
+					</row>
+					
+					<row>
+						<cell colspan="2" align="center">
+							<vlayout>
+								<button label="Print 1" onClick="@command('print1Command')" width="100px"></button>
+								<button label="Print 3" onClick="@command('print3Command')" width="100px"></button>
+								<label id="mesg" value="@bind(vm.message)" style="color:red;font-size:14px"/>
+							</vlayout>
+						</cell>
+						
+						<cell colspan="2" align="center">
+							<vlayout>
+								<button label="Printer Name" onClick="@command('printerNameCommand')" width="100px"></button>
+								<label value="@bind(vm.message)" style="color:red;font-size:14px"/>
+							</vlayout>
+						</cell>
+						
+						
+					</row>
+					
+					<row>
+					<cell colspan="2" align="left">
+					<textbox rows="1" hflex="1" width="200" value="@bind(vm.selectPrint)"
+					  constraint="no empty:*" />
+					  <button label="Print 2" onClick="@command('print2Command')" width="100px"></button>
+					  
+					  </cell>
+					  
+					</row>
+					
+					
+				</rows>
+			</grid>
+			
+			</hbox>
+			
+				<zscript><![CDATA[  
+      void test()
+     {
+    	 //alert("dd");
+    	//txtName.setValue("");       
+     }
+     	
+     	 //alert(txtName.getValue());
+        //winOne.setTitle("given by zscript");             
+    ]]>
+    </zscript>   
+		
+</window>
+
+
+</zk>

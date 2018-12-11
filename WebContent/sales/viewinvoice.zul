@@ -1,0 +1,149 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<zk>
+<window id="viewInvoice" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('sales.CashInvoiceViewModel' ,type='viewcashinvoice')"
+		mode="highlighted" title="فواتير " border="normal" position="center,center"
+		closable="true" sizable="true" onCancel="viewInvoice.detach()"
+		width="1100px" height="600px" style="direction: rtl;text-align:right">
+		
+<borderlayout>
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" >
+		
+		<grid style="direction: rtl;text-align:right" 
+		form="@id('fx') @load(vm.objCashInvoice) @save(vm.objCashInvoice, before='saveInvoiceCommand')">
+		<columns>
+		<column width="100px"></column>
+		<column width="200px"></column>
+		<column width="100px"></column>
+		<column width="200px"></column>
+		<column width="100px"></column>
+		<column width="100px"></column>
+		<column width="100px"></column>
+		<column></column>
+		</columns>
+		
+		<rows>
+		<row>
+		<cell colspan="7">
+		<hbox pack="center" hflex="1">
+		<label value="@bind(vm.objExhibtion.exhibitionname)"></label>
+		</hbox>
+		</cell>
+		</row>
+		
+		<row>
+		<label value="رقم الفاتورة"></label>
+		<textbox value="@bind(fx.invoiceprefix)" hflex="1" readonly="true"></textbox>
+		
+		<label value="المستخدم"></label>
+		<textbox value="@bind(fx.createdby)" hflex="1" readonly="true"></textbox>
+		
+		
+		
+		<label value="التاريخ"></label>
+		<datebox value="@bind(fx.invoicedate)" format="dd/MM/yyyy" hflex="1" readonly="true"></datebox>
+		</row>
+		
+		<row>
+		<label value="السادة"></label>
+		<textbox value="@bind(fx.customername)" hflex="1" readonly="true"></textbox>
+		
+		
+		<cell colspan="2">
+		<hbox>
+		<label value="حسم"></label>
+		<radiogroup  selectedItem="@bind(vm.discountType)">
+		<radio label="مفرق" value="1" />
+         <radio label="جملة" value="2"/>
+	    </radiogroup>
+		</hbox>
+		</cell>
+			    	   
+		</row>
+		
+		
+		</rows>
+		
+		</grid>
+		
+		
+		<listbox model="@bind(vm.lstInvDetails)" vflex="1" hflex="1" selectedItem="@bind(vm.selectedInvDetail)"
+				 width="900px">
+				 
+				 	<listhead menupopup="auto" sizable="true">
+						<listheader label="السطر" width="60px" />	
+						<listheader label="ISBN" sort="auto('bookcode')" width="100px"/>
+						<listheader label="إسم الكتاب" sort="auto('bookname')" width="300px"/>		
+						<listheader label="العدد" sort="auto('quantity')" width="100px"/>		
+						<listheader label="السعر" sort="auto('price')" width="100px"/>	
+						<listheader label="السعر بعد الحسم" sort="auto('discountprice')" width="100px"/>	
+						<listheader label="الإجمالي" sort="auto('totalprice')" width="100px"/>		
+						<listheader label="حذف" width="100px" visible="@bind(vm.objUser.isadmin eq true)"></listheader>	
+																
+					</listhead>
+					<template name="model">
+						<listitem>
+						
+							<listcell>
+								<label value="@bind(each.invdline)" />
+							</listcell>
+						
+							<listcell>
+								<label value="@bind(each.bookcode)" 
+								 />
+							</listcell>
+							<listcell>
+								<label value="@bind(each.bookname)" />
+							</listcell>
+							<listcell>
+							<intbox value="@bind(each.quantity)" style="direction: ltr;text-align:right"   hflex="1" onChange="@command('getTotalInvoice' , row=each)"/>
+						<!-- 	<label value="@bind(each.quantity)"  hflex="1"/> -->
+							</listcell>
+							<listcell>
+								<label value="@bind(each.price)" />
+							</listcell>
+							<listcell>
+					<!-- 	  <label value="@bind(each.discountprice)" hflex="1"/> -->
+						  <doublebox value="@bind(each.discountprice)" onChange="@command('getTotalInvoice' , row=each)" hflex="1"/>
+							</listcell>
+						
+					<listcell label="@bind(c:formatNumber(each.discountprice * each.quantity ,'#,###.##'))"  style="text-align:right"/>					
+						
+						<listcell visible="@bind(vm.objUser.isadmin eq true)">
+								<button onClick="@command('deleteBookCommand',todo=each)" 
+								image="/images/delete-small.gif" width="36px"/>
+							</listcell>
+					
+							
+						</listitem>
+					</template>
+				 </listbox>
+		
+		<hbox>
+		<label value="المجموع"></label>
+		<doublebox value="@bind(vm.objCashInvoice.invoiceamount)" hflex="1" format="#,###.##"></doublebox>
+		
+		<label value="حسم خاص"></label>
+		<doublebox value="@bind(vm.objCashInvoice.invoicediscount)" onChange="@command('getTotalInvoice')" hflex="1" format="#,###.##"></doublebox>
+		
+		<label value="الإجمالي"></label>
+		<doublebox value="@bind(vm.objCashInvoice.invoicetotal)" hflex="1" format="#,###.##"></doublebox>
+		
+		<label value="الدفع"></label>
+		<doublebox value="@bind(vm.objCashInvoice.paidamount)" hflex="1" format="#,###.##"></doublebox>
+		
+		<button label="طباعة" onClick="@command('printInvoiceCommand',silentPrint=false)"></button>
+		
+		<button label="حفظ" onClick="@command('updateInvoiceCommand')" visible="@bind(vm.objUser.isadmin eq true)"></button>
+		
+		</hbox>
+		
+		
+		
+		</vlayout>
+		</center>
+		</borderlayout>
+		</window>
+</zk>

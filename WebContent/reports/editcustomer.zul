@@ -1,0 +1,91 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="customerDialog"  border="normal" title="الزبائن"  width="600px" height="350px" closable="true" sizable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('reports.CustomerViewModel',type='editcustomer')"
+		onCancel="customerDialog.detach()" style="direction: rtl;text-align:right">
+		
+<vlayout 
+  form="@id('fx') @load(vm.selectedCustomer) @save(vm.selectedCustomer, before='updateCustomerCommand')">
+<grid>
+<columns>
+<column width="100px"></column>
+<column width="200px"></column>
+<column width="100px"></column>
+<column width="150px"></column>
+</columns>
+
+<rows>
+<row>
+<label value="إسم العميل"></label>
+<textbox value="@bind(fx.customername)"  constraint="no empty:*" hflex="1"></textbox>
+
+<label value="خاص"></label>
+<doublebox value="@bind(fx.special)"></doublebox>
+</row>
+
+<row>
+<label value="رقم التلفون" ></label>
+<textbox value="@bind(fx.mobile)" constraint="no empty:*" hflex="1"></textbox>
+
+<label value="البلد"></label>
+<listbox hflex="1" mold="select"
+		model="@load(vm.lstCountry)" selectedItem="@bind(vm.selectedCountry)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.countryname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+</row>
+
+
+<row>
+<label value="البريد الإلكتروني"></label>
+<textbox value="@bind(fx.email)" constraint="/.+@.+\.[a-z]+/: Please enter an e-mail address (example@example.com)" hflex="1"></textbox>
+
+
+<label value="المدينة"></label>
+	<listbox hflex="1" mold="select"
+		model="@load(vm.lstCity)" selectedItem="@bind(vm.selectedCity)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.cityname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+
+</row>
+
+<row>
+<label value="العنوان"></label>
+<cell colspan="3">
+<textbox value="@bind(fx.address)" hflex="1"></textbox>
+</cell>
+</row>
+
+<row>
+<label value="ملاحظات"></label>
+<cell colspan="3">
+<textbox value="@bind(fx.notes)" hflex="1" rows="3"></textbox>
+</cell>
+</row>
+
+
+
+
+<row>
+<cell colspan="4">
+<hbox hflex="1" pack="center">
+<button label="حفظ" onClick="@command('updateCustomerCommand')"></button>
+<button label="إغلاق" onClick="customerDialog.detach()"></button>
+</hbox>
+</cell>
+</row>
+</rows>
+</grid>
+
+</vlayout>
+
+</window>
+</zk>

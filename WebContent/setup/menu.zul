@@ -1,0 +1,97 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('setup.SetupViewModel',type='menus')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+		
+		      <hbox>
+					<label value="إختر دور"></label>
+					<listbox model="@bind(vm.lstCompanyRoles)" multiple="false"
+						width="200px" mold="select" selectedItem="@bind(vm.selectedCompanyRole)">
+						<template name="model" var="item">
+							<listitem>
+								<listcell label="@load(item.rolename)"></listcell>
+							</listitem>
+						</template>
+					</listbox>
+					<button label="Save" onClick="@command('saveUserMenuCommand')"
+						visible="false"></button>
+					<button label="View" onClick="@command('viewMenuCommand')"
+						visible="false"></button>
+
+					<!-- <checkbox label="Check All View" checked="@bind(vm.checkAllView)"></checkbox> 
+						<checkbox label="Check All Modify" checked="@bind(vm.checkAllModify)"></checkbox> 
+						<checkbox label="Check All Delete" checked="@bind(vm.checkAllDelete)"></checkbox> -->
+				</hbox>
+				<hbox pack="center" hflex="1">
+
+					<button label="Save" onClick="@command('saveUserMenuCommand')"></button>
+				</hbox>
+				
+				<grid model="@bind(vm.lstSubMenuGroup)" vflex="1" width="17000px">
+						<template name="model:group" >
+							<group label="@load(each[0])" />
+						</template>
+
+						<template name="model">
+							<row>
+								<grid model="@bind(each.children)">
+									<columns>
+										<column label="Title" width="220px"></column>
+										<column width="100px">
+											<checkbox label="Add/Create" style="font-weight:bold;" hflex="1"
+												checked="@bind(each.canAdd)"
+												onCheck="@command('checkAllAddCommand',row=each,chk=self.checked,type='add')"></checkbox>
+										</column>
+										<column width="100px">
+											<checkbox label="Edit/Modify" style="font-weight:bold;"
+												checked="@bind(each.canModify)"
+												onCheck="@command('checkAllAddCommand',row=each,chk=self.checked,type='edit')"></checkbox>
+										</column>
+										<column width="100px">
+											<checkbox label="View" style="font-weight:bold;"
+												checked="@bind(each.canView)"
+												onCheck="@command('checkAllAddCommand',row=each,chk=self.checked,type='view')"></checkbox>
+										</column>
+										<column width="100px">
+											<checkbox label="Delete" style="font-weight:bold;"
+												checked="@bind(each.canDelete)"
+												onCheck="@command('checkAllAddCommand',row=each,chk=self.checked,type='delete')"></checkbox>
+										</column>
+										<column width="100px">
+											<checkbox label="Export" style="font-weight:bold;"
+												checked="@bind(each.canExport)"
+												onCheck="@command('checkAllAddCommand',row=each,chk=self.checked,type='export')"></checkbox>
+										</column>
+										<column width="100px">
+											<checkbox label="Print" style="font-weight:bold;"
+												checked="@bind(each.canPrint)"
+												onCheck="@command('checkAllAddCommand',row=each,chk=self.checked,type='print')"></checkbox>
+										</column>
+									</columns>
+									<template name="model" var="item">
+										<row>
+											<label value="@load(item.artitle)"></label>
+											<checkbox checked="@bind(item.canAdd)"></checkbox>
+											<checkbox checked="@bind(item.canModify)"></checkbox>
+											<checkbox checked="@bind(item.canView)"></checkbox>
+											<checkbox checked="@bind(item.canDelete)"></checkbox>
+											<checkbox checked="@bind(item.canExport)"></checkbox>
+											<checkbox checked="@bind(item.canPrint)"></checkbox>
+										</row>
+									</template>
+								</grid>
+							</row>
+						</template>
+
+					</grid>
+				
+				
+				
+		</vlayout>
+		</center>
+		</borderlayout>
+</zk>

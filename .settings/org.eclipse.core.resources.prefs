@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//src/books/ImportBooksViewModel.java=UTF-8
+encoding//src/common/ArabicToEnglish.java=UTF-8
+encoding//src/common/BillPrintable.java=UTF-8
+encoding//src/common/CommonValues.java=UTF-8
+encoding//src/login/AuthenticateViewModel.java=UTF-8
+encoding//src/reports/BooksBuyViewModel.java=UTF-8
+encoding//src/reports/CustomerViewModel.java=UTF-8
+encoding//src/sales/CashInvoiceViewModel.java=UTF-8
+encoding//src/setup/SetupViewModel.java=UTF-8

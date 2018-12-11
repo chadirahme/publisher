@@ -1,0 +1,103 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('reports.BooksBuyViewModel',type='booksalerts')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+		
+		<grid>
+		<columns>
+		<column width="100px"></column>
+		<column width="230px"></column>
+		<column></column>
+		<column></column>
+		<column></column>
+		</columns>
+		
+		<rows>
+		<row>
+		<label value="إختيار المعرض"></label>
+		<listbox mold="select" width="200px"
+		 model="@load(vm.lstExhibitions)" selectedItem="@bind(vm.selectedExhibitions)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.exhibitionname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>	
+		
+		<listbox hflex="1" mold="select"
+		 model="@bind(vm.lstAgency)" selectedItem="@bind(vm.selectedAgency)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.agencyname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>			
+		
+		</row>
+							
+		<row>
+		<label value="كمية الكتب الأقل من"></label>
+		<intbox hflex="1" value="@bind(vm.bookQty)"></intbox>
+		<button label="بحث" onClick="@command('viewBooksRemainsCommand')"></button>
+		</row>
+		
+		</rows>
+		</grid>
+		
+			
+				<listbox id="lstReport" model="@bind(vm.lstBooks)" vflex="1">
+					<listhead style="direction: rtl;text-align:center">
+																
+						<listheader label="ISBN" sort="auto('bookCode')" width="100px"/>	
+						<listheader label="إسم الكتاب" sort="auto('bookName')" width="300px"/>	
+						<listheader label="إسم الدار" sort="auto('agencyName')" width="200px"/>	
+						<listheader label="رقم الفاتورة" sort="auto('agencyInvoiceNumber')" width="150px"/>	
+					
+						<listheader label="الكمية" sort="auto('quantity')" width="80px"></listheader>						
+						<listheader label=" الكمية الباقية " sort="auto('remainQuantity')" width="80px"></listheader>		
+						<listheader label=" السعر $" sort="auto('price')" width="80px"></listheader>		
+						
+					</listhead>
+					<template name="model">
+						<listitem>								
+							<listcell>
+								<label value="@bind(each.bookCode)"/>
+							</listcell>	
+							
+							<listcell>
+								<label value="@bind(each.bookName)"/>
+							</listcell>
+							<listcell>
+								<label value="@bind(each.agencyName)"/>
+							</listcell>
+							<listcell>
+								<label value="@bind(each.agencyInvoiceNumber)"/>
+							</listcell>				
+																						
+						
+							<listcell>
+								<label value="@bind(each.quantity)"/>
+							</listcell>	
+							
+							<listcell>
+								<label value="@bind(each.remainQuantity)"/>
+							</listcell>	
+							
+							<listcell>
+								<label value="@bind(each.price)"/>
+							</listcell>	
+		
+						</listitem>
+					</template>
+				</listbox>
+				
+				<hbox hflex="1" pack="center">				
+				 <button label="Excel" onClick="@command('exportBooksRemainToExcel')"></button>
+				</hbox>
+				</vlayout>
+				</center>
+</borderlayout>
+</zk>

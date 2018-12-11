@@ -1,0 +1,78 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="modalDialog"  border="normal" title="المسخدم"  width="400px" height="350px" closable="true" sizable="true"
+		apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('setup.SetupViewModel',type='editusers')"
+		onCancel="modalDialog.detach()" style="direction: rtl;text-align:right">
+		
+<vlayout 
+  form="@id('fx') @load(vm.selectedUser) @save(vm.selectedUser, before='updateUserCommand')">
+<grid>
+<columns>
+<column width="100px"></column>
+<column></column>
+</columns>
+
+<rows>
+<row>
+<label value="إسم المسخدم"></label>
+<textbox value="@bind(fx.username)"  constraint="no empty:*"></textbox>
+</row>
+
+<row>
+<label value="كلمة السر" ></label>
+<textbox value="@bind(fx.userpassword)" constraint="no empty:*"></textbox>
+</row>
+
+<row>
+<label value="إسم الموظف"></label>
+<textbox value="@bind(fx.firstname)" constraint="no empty:*"></textbox>
+</row>
+
+<row>
+<label value="البريد الإلكتروني"></label>
+<textbox value="@bind(fx.useremail)" constraint="/.+@.+\.[a-z]+/: Please enter an e-mail address (example@example.com)" ></textbox>
+</row>
+
+<row>
+<label value="هاتف"></label>
+<textbox value="@bind(fx.usermobile)"></textbox>
+</row>
+
+<row>
+<label value="مدير"></label>
+
+<checkbox checked="@bind(fx.isadmin)"></checkbox>
+</row>
+
+<row>
+<label value="الصلاحيات"></label>
+<listbox selectedItem="@bind(vm.selectedCompanyRole)"
+					model="@load(vm.lstCompanyRoles)" mold="select" width="200px">
+					<template name="model" var="item">
+						<listitem>
+							<listcell label="@load(item.rolename)">
+							</listcell>
+						</listitem>
+					</template>
+				</listbox>
+
+
+</row>
+
+
+<row>
+<cell colspan="2">
+<hbox hflex="1" pack="center">
+<button label="حفظ" onClick="@command('updateUserCommand')"></button>
+<button label="إغلاق" onClick="modalDialog.detach()"></button>
+</hbox>
+</cell>
+</row>
+</rows>
+</grid>
+
+</vlayout>
+
+</window>
+</zk>

@@ -1,0 +1,85 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="onHoldPopUp" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('sales.CashInvoiceViewModel' ,type='onholdInvoices')"
+		mode="highlighted" title="فواتير معلقة" border="normal" position="center,center"
+		closable="true" sizable="true" onCancel="onHoldPopUp.detach()" onOK="@command('onHoldOkCommand')"
+		width="800px" height="400px" style="direction: rtl;text-align:right">
+
+
+		<listbox model="@bind(vm.lstOnHoldInvoices)" vflex="1" hflex="1" style="direction: rtl;text-align:right"
+				 width="900px" mold="paging">
+
+					<auxhead sclass="category-center">
+						<auxheader colspan="1">
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1" value="@bind(vm.filter.invoiceprefix)"
+								onChange="@command('changeFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.invoicedate)" onChange="@command('changeFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.customerName)" onChange="@command('changeFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.invoicetotal)" onChange="@command('changeFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.createdby)" onChange="@command('changeFilter')" />
+						</auxheader>
+						
+					</auxhead>
+					<listhead menupopup="auto" sizable="true" style="direction: rtl;text-align:center">
+						<listheader label="إختر" width="60px" />						
+						<listheader label="رقم الفاتورة" width="100px"></listheader>
+						<listheader label="التاريخ" width="100px" />
+						<listheader label="إسم العميل" sort="auto('customername')" width="160px"/>	
+						<listheader label="الإجمالي" sort="auto('mobile')" width="100px"/>			
+						<listheader label="المستخدم" sort="auto('mobile')" width="100px"/>	
+						<listheader label="حذف" width="100px"></listheader>													
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell>
+			   			<button image="/images/rowedit.png" onClick="@command('selectOnHoldCommand', row=each)" />
+							</listcell>
+							<listcell>
+								<label value="@bind(each.invoiceprefix)" 
+								 />
+							</listcell>
+							<listcell>
+								<label value="@bind(each.invoicedate)" />
+							</listcell>							
+							
+							<listcell>
+								<label value="@bind(each.customername)" />
+							</listcell>
+							
+							<listcell>
+								<label value="@bind(each.invoicetotal)" />
+							</listcell>
+							<listcell>
+								<label value="@bind(each.createdby)" />
+							</listcell>
+							
+							<listcell>
+								<button onClick="@command('deleteOnHoldCommand',todo=each)" 
+								image="/images/delete-small.gif" width="36px"/>
+							</listcell>
+							
+						</listitem>
+					</template>
+				</listbox>
+</window>
+</zk>

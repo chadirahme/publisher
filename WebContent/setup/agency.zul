@@ -1,0 +1,69 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<zk>
+<window id="agencyDialog" apply="org.zkoss.bind.BindComposer" mode="highlighted" title="Agency" 
+border="normal" position="center,center" closable="true"
+viewModel="@id('vm') @init('setup.SetupViewModel' ,type='agency')"  sizable="true"
+
+onCancel="agencyDialog.detach()"
+ width="520px" height="350px">
+  
+<vlayout>
+<grid style="direction: rtl;text-align:right">
+<columns>
+<column width="100px"></column>
+<column width="200px"></column>
+<column width="120px"></column>
+</columns>
+
+<rows>
+
+<row>
+<label>إسم الدار</label>
+<textbox value="@bind(vm.selectedAgency.agencyname)" hflex="1"></textbox>
+</row>
+
+<row>
+<label>رقم الفاتورة</label>
+<textbox value="@bind(vm.selectedAgency.invoicenumber)" hflex="1"></textbox>
+</row>
+
+<row>
+<label>قيمة الفاتورة</label>
+<doublebox value="@bind(vm.selectedAgency.invoiceamount)" hflex="1"/>
+
+</row>
+
+<row>
+<label>عدد الطرود</label>
+<intbox value="@bind(vm.selectedAgency.boxquantity)" hflex="1"/>
+</row>
+
+
+<row>
+<label>نسبة الحسم</label> 
+<doublebox value="@bind(vm.selectedAgency.discountpercentage)" hflex="1"></doublebox>
+</row>
+
+<row>
+<label>نسبة الحسم للجمهور</label> 
+<doublebox value="@bind(vm.selectedAgency.discountaudience)" hflex="1"></doublebox>
+</row>
+
+</rows>
+</grid>
+
+
+
+<hbox hflex="1" pack="center" >
+
+<button label="حفظ" onClick="@command('saveAgencyCommand')"></button>
+<button label="إغلاق" onClick="agencyDialog.detach()"></button>
+
+
+</hbox>
+</vlayout>
+
+
+</window>
+</zk>

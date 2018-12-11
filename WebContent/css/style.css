@@ -1,0 +1,125 @@
+.loginlabel
+{
+color:green;
+font-weight:bold;
+font-size:14px;
+}
+
+
+
+
+.banner {
+	background-color:#F0F0F0;
+	color: white;
+	padding: 5px 10px;
+	
+}
+.banner-head{
+	font-size: 2.4em;	
+}
+.banner .logout{
+	text-decoration: underline;
+	cursor: pointer;
+} 
+
+.footer {
+	background-color:#102d35;
+	color: white;
+	padding-top: 5px;
+}
+
+.footer a,.footer a:VISITED {
+	color: white;	
+}
+
+.sidebar a,.sidebar a:VISITED {
+	color: black;
+	text-decoration: none;
+}
+
+.sidebar-fn{
+	cursor: pointer;
+}
+
+.arsidebar .z-caption .z-caption-l{	
+	text-align: right;
+}
+
+		.artabbox               
+        .artabbox .z-tab-text         
+        {                       
+            unicode-bidi: bidi-override; 
+            direction: rtl; 
+            width:150px;
+            text-align: right;
+            float: right;
+        }
+
+.head1{
+	font-size: large;
+}
+.head2{
+	font-size: medium;
+}
+
+.row-title .z-label{
+	font-weight: bold;
+	color:#636363;
+}
+
+.z-label{
+	font-weight: bold;
+	color:black;
+}
+
+.fn-caption .z-caption-l{
+	font-weight: bold;
+	font-size: medium;
+	color: #636363;
+}
+
+.complete-todo .z-label{
+	text-decoration: line-through;
+}
+
+
+.warn{
+	color:red;
+}
+
+.demo-main a,.demo-main a:VISITED{
+	color:#636363;
+	text-decoration: underline;
+	font-size: smaller;	
+}
+
+.todo-box {
+	padding-right:4px;
+	 
+}
+
+.z-textbox{
+	width: 200px;
+}
+
+ .defaultMenu{
+		 color:blue;text-decoration:underline;cursor: hand;font-size: 14px;        
+    		}
+    
+     	.selectedMenu{
+		 color:green;text-decoration:underline;cursor: hand;font-size: 14px;cursor:hand;  
+		 
+		}
+		
+	 .z-groupbox-3d > .z-groupbox-header .z-caption, .z-groupbox-3d > .z-groupbox-header .z-groupbox-title 
+   {    
+    background:#2C6F99;
+    color:white;   
+    border: 1px solid #C5C5C5;
+   
+    
+    }
+  	.z-caption > :first-child
+    {   
+    margin-left: 5px;
+    }

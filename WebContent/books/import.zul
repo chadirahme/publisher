@@ -1,0 +1,148 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="importDialog" apply="org.zkoss.bind.BindComposer" mode="highlighted" title="Import Books" 
+border="normal" position="center,center" closable="true"
+viewModel="@id('vm') @init('books.ImportBooksViewModel',type='import')"  sizable="true"
+
+onCancel="importDialog.detach()"
+ width="820px" height="550px">
+ 
+ 
+<borderlayout>
+		<center style="direction: rtl;text-align:right" >
+		
+		<vlayout hflex="1" vflex="1">
+		
+		<grid>
+		<columns>
+		<column width="100px"></column>
+		<column width="200px"></column>
+		<column></column>
+		
+		</columns>
+		
+		<rows>
+		
+		<row>
+		<label value="إختيار المعرض"></label>
+		<listbox hflex="1" mold="select"
+		 model="@load(vm.lstExhibitions)" selectedItem="@bind(vm.selectedExhibitions)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.exhibitionname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		
+		
+		</row>
+		
+		
+		<row>
+		<label value="إسم الدار"></label>
+		<listbox hflex="1" mold="select"
+		 model="@bind(vm.lstAgency)" selectedItem="@bind(vm.selectedAgency)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.agencyname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		
+		</row>
+		
+		<row>
+		<label value="رقم الفاتورة"></label>
+		<textbox  hflex="1" value="@bind(vm.objImportBooks.invoicenumber)"></textbox>
+		</row>
+		
+		<row>
+		<label value="ملف إستيراد الكتب"></label>
+		<hlayout style="direction: ltr;">
+                        
+                        <button label="gggggggggg" upload="true,maxsize=-1,native" onUpload="@command('onFileUpload')"/>
+                    </hlayout>
+                    
+		
+		<button label="اختر ملف" upload="true" disabled="@bind(!vm.canUploadFile)"
+		  onUpload="@command('uploadFileCommand',attId=4)"></button>
+		</row>
+		
+		   <row>
+			<label value="عرض البيانات"></label>
+			<button label="عرض " onClick="@command('previewDataFile')" disabled="@bind(!vm.canViewData)"></button>  
+			<label  style="color:red"></label>
+			</row>
+			
+			<row>
+			<cell colspan="3">
+			<listbox model="@bind(vm.lstBooks)"
+		  		  height="200px" hflex="1">
+		  		 
+					<listhead style="direction: rtl;text-align:center">
+						<listheader label="ISBN" sort="auto('bookCode')" width="100px"/>	
+						<listheader label="اسم الكتاب" sort="auto('bookName')" width="250px"/>	
+						<listheader label="اسم المؤلف" sort="auto('editor')" width="150px"/>	
+						<listheader label="اسم الناشر" sort="auto('publisher')" width="100px"/>	
+							<listheader label="الكمية" sort="auto('quantity')"  width="100px"></listheader>
+						<listheader label="السعر الإفرادي" sort="auto('price')" hflex="1"></listheader>	
+					</listhead>
+					
+					<template name="model">
+						<listitem>		
+						<listcell>
+								<label value="@bind(each.bookCode)"/>
+							</listcell>
+							
+						<listcell>
+								<label value="@bind(each.bookName)"/>
+							</listcell>	
+							
+							<listcell>
+								<label value="@bind(each.editor)"/>
+							</listcell>
+							
+							<listcell>
+								<label value="@bind(each.author)"/>
+							</listcell>
+							
+							<listcell>
+								<label value="@bind(each.quantity)"/>
+							</listcell>
+							
+							<listcell>
+								<label value="@bind(each.price)"/>
+							</listcell>
+							
+							</listitem>
+							</template>
+					
+					</listbox>
+			
+			</cell>
+			</row>
+			
+			<row>
+			<cell colspan="3">
+			<label value="@bind(vm.totalBooks)"></label>
+			</cell>
+			</row>
+			
+		<row>
+		<cell colspan="3">
+		<hbox pack="center" hflex="1">
+		<button label="حفظ" onClick="@command('saveImportCommand')" disabled="@bind(!vm.canSaveData)"></button>
+		</hbox>
+		</cell>
+		</row>
+		
+		</rows>
+		</grid>
+		
+		
+		</vlayout>
+		
+		</center>
+		</borderlayout>
+		</window>
+</zk>

@@ -1,0 +1,111 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('setup.SetupViewModel',type='company')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+		
+		<grid style="direction: rtl;text-align:right">
+		<columns>
+		<column width="100px"></column>
+		<column></column>
+		<column></column>
+		
+		</columns>
+		
+		<rows>
+		<row>
+		<button label="اختيار الشعار" upload="true,maxsize=300">
+        <attribute name="onUpload"><![CDATA[
+            org.zkoss.util.media.Media media = event.getMedia();
+            if (media instanceof org.zkoss.image.Image) {
+                org.zkoss.zul.Image image = new org.zkoss.zul.Image();
+                imgLogo.setContent(media);
+               // image.setParent(pics);
+            } else {
+                Messagebox.show("Not an image: "+media, "Error", Messagebox.OK, Messagebox.ERROR);
+                break;
+            }
+        ]]></attribute>
+    </button>
+    <separator />
+    <vlayout id="pics" height="60px" style="overflow:auto" />
+		</row>
+		
+		<row visible="false">
+		
+		<label value="شعار"></label>
+		<!-- <button label="اختيار الشعار" upload="true"
+		  onUpload="@command('uploadLogoCommand',attId=4)"></button> -->
+		  <button label="اختيار الشعار" upload="true,maxsize=300">
+        <attribute name="onUpload"><![CDATA[
+            org.zkoss.util.media.Media media = event.getMedia();
+            if (media instanceof org.zkoss.image.Image) {
+                org.zkoss.zul.Image image = new org.zkoss.zul.Image();
+                imgLogo.setContent(media);
+               // image.setParent(pics);
+            } else {
+                Messagebox.show("Not an image: "+media, "Error", Messagebox.OK, Messagebox.ERROR);
+                break;
+            }
+        ]]></attribute>
+    </button>
+		  
+		  
+		
+		<image id="imgLogo" src="@bind(vm.objCompanySetting.logopath)" width="100px" height="100px"></image>
+		
+		</row>
+		
+		<row>
+		<label value="اسم الجناح"></label>
+		<textbox value="@bind(vm.objCompanySetting.companyName)"></textbox>
+		</row>
+		
+		<row>
+		<label value="رقم الجناح"></label>
+		<textbox value="@bind(vm.objCompanySetting.jenahname)"></textbox>
+		</row>
+		
+		
+		
+		<row>
+		<label value="السطر الثاني"></label>
+		<textbox value="@bind(vm.objCompanySetting.secondline)"></textbox>
+		</row>
+		
+		
+		<row>
+		<label value="إعداد الطابعة"></label>
+		<textbox></textbox>
+		</row>
+		
+		<row>
+		<label value="عدد النسخ"></label>
+		<intbox value="@bind(vm.objCompanySetting.printcount)"></intbox>
+		</row>
+		
+		<row>
+		<label value="تذييل الفاتورة"></label>
+		<textbox value="@bind(vm.objCompanySetting.invoicefooter)"></textbox>
+		</row>
+		
+		<row>
+		<cell colspan="2">
+		<hbox hflex="1" pack="center">
+		<button label="حفظ" onClick="@command('saveCompanySettingCommand')"></button>
+		</hbox>
+		
+		</cell>
+		</row>
+		
+		</rows>
+		</grid>
+		
+		
+		</vlayout>
+		
+		</center>
+		</borderlayout>
+</zk>

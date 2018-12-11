@@ -1,0 +1,67 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('books.ImportBooksViewModel',type='agencylist')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+		
+				<listbox height="500px"  sizedByContent="false" emptyMessage="No data found"
+					model="@bind(vm.lstAgency) @template(each.editingStatus ? 'editable' : 'noneditable')">
+					
+					<listhead sizable="true">
+					<listheader label="إسم الدار" width="200px"></listheader>
+					<listheader label="العنوان" width="200px"></listheader>
+					<listheader label="هاتف" width="200px"></listheader>
+					
+					<listheader label="تعديل" />
+	
+					</listhead>
+					
+					<template name="noneditable" var="item">
+						<listitem>
+						<listcell label="@bind(item.agencyname)" />
+						<listcell label="@bind(item.address)" />						
+							<listcell label="@bind(item.telephone)" />	
+							<listcell>
+								<button onClick="@command('changeEditableStatus', row=item)"
+								image="/images/pencil-small.png" width="36px"/>
+							</listcell>
+																			  							 							
+						</listitem>
+					</template>
+					
+					<template name="editable">
+						<listitem>		
+						<listcell>
+								<textbox value="@bind(each.agencyname)" hflex="1"/>
+							</listcell>	
+							<listcell>
+								<textbox value="@bind(each.address)" hflex="1"/>
+							</listcell>
+							<listcell>
+								<textbox value="@bind(each.telephone)" hflex="1"/>
+							</listcell>
+							
+							<listcell>
+								<div>
+                        <button
+                            label="حفظ"
+                            onClick="@command('saveAgencyCommand', row=each)" />
+                        <button
+                           label="إلغاء"
+                            onClick="@command('changeEditableStatus', row=each)" />
+                    </div>   
+							</listcell>
+							
+						
+							
+							</listitem>
+							</template>
+					</listbox>
+				
+				
+				</vlayout>
+				</center>
+</borderlayout>
+</zk>

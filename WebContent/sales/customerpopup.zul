@@ -1,0 +1,56 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="CustomersPopUp" apply="org.zkoss.bind.BindComposer"
+		viewModel="@id('vm') @init('sales.CustomerPopupViewModel')"
+		mode="highlighted" title="Customers Popup" border="normal" position="center,center"
+		closable="true" sizable="true" onCancel="CustomersPopUp.detach()" onOK="@command('onOkCommand')"
+		width="1100px" height="400px">
+
+
+		<listbox model="@bind(vm.lstCustomers)" vflex="1" hflex="1"
+				 width="900px" mold="paging"
+					>
+
+					<auxhead sclass="category-center">
+						<auxheader colspan="1">
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1" value="@bind(vm.filter.customerName)"
+								onChange="@command('changeFilter')" />
+						</auxheader>
+						<auxheader colspan="1">
+							<image src="/images/funnel.png" />
+							<textbox instant="true" hflex="1"
+								value="@bind(vm.filter.mobile)" onChange="@command('changeFilter')" />
+						</auxheader>
+						
+					</auxhead>
+					<listhead menupopup="auto" sizable="true">
+						<listheader label="إختر" width="60px" />
+						<listheader label="إسم العميل" sort="auto('customername')"/>	
+						<listheader label="رقم التلفون" sort="auto('mobile')"/>	
+						<listheader label="خاص" sort="auto('special')"/>													
+					</listhead>
+					<template name="model">
+						<listitem>
+							<listcell>
+			   			<button image="/images/rowedit.png" onClick="@command('selectdCustomerCommand', row=each)" />
+							</listcell>
+							<listcell>
+								<label value="@bind(each.customername)" 
+								 />
+							</listcell>
+							<listcell>
+								<label value="@bind(each.mobile)" />
+							</listcell>
+							
+							<listcell>
+								<label value="@bind(each.special)" />
+							</listcell>
+						
+						</listitem>
+					</template>
+				</listbox>
+</window>
+</zk>

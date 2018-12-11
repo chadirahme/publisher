@@ -1,0 +1,57 @@
+<?page title="Publisher" contentType="text/html;charset=UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css" ?>
+<?link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" ?>
+
+<zk>
+  
+  	<vlayout apply="org.zkoss.bind.BindComposer"  
+ 	viewModel="@id('vm') @init('login.AuthenticateViewModel')"
+  	>
+  	
+	<hbox hflex="1"  align="center" pack="center" spacing="20px" width="400px">
+  		
+  			
+  				<grid style="font-size:16px">
+				<columns>
+					
+					<column width="100px" />
+					<column width="500px"/>
+					<column />
+					
+				</columns>
+				<rows>
+				
+				
+				
+					<row>
+					<label value="Arabic Text" zclass="loginlabel"></label>
+					<textbox value="@bind(vm.arabicText)" multiline="true" rows="5" 
+					  placeholder="Enter your arabic text" hflex="1" constraint="no empty" />
+					</row>
+					<row>
+					<label value="English Text"  zclass="loginlabel"></label>
+					<textbox value="@bind(vm.englishText)"  multiline="true" rows="5"
+					hflex="1" 
+					/>
+					</row>
+					<row>
+						<cell colspan="2" align="center">
+							<vlayout>
+							<hbox hflex="1" pack="center">
+								<button label="Convert" onClick="@command('convertCommand')" width="100px"></button>
+								<button label="Clear" onClick="@command('clearTextCommand')" width="100px"></button>
+								</hbox>
+								<label id="mesg" value="@bind(vm.message)" style="color:red"/>
+							</vlayout>
+						</cell>
+					</row>
+					
+					
+				</rows>
+			</grid>
+			
+			</hbox>
+				</vlayout>				
+
+
+</zk>

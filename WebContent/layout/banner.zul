@@ -1,0 +1,58 @@
+
+<zk>
+<style>
+   
+   .link-Button {
+    border: 0px solid #006;
+ background:transparent;
+ font-family: arial,sans-serif;
+ font-size: 12px;
+ font-weight: normal;
+ text-decoration:underline;
+ text-align:center;     
+ color:red;
+ padding-left:0px;
+ padding-right:0px;
+ padding-bottom:0px;
+ padding-top:0px;
+ cursor:pointer;  
+}
+
+</style>
+<grid apply="org.zkoss.bind.BindComposer"  
+  	viewModel="@id('vm') @init('login.AuthenticateViewModel')">
+<columns>
+<column width="250px"></column>
+<column></column>
+<column width="150px"></column>
+</columns>
+
+<rows>
+
+<row>
+<cell>
+<label value="Welcome "/><space></space>
+<label value="${sessionScope.Authentication.firstname}" style="color:black; "></label> <space></space>
+		
+		<label value="Logout" sclass="link-Button" onClick="@command('logout')"></label>
+		
+                    
+<!-- <image src="/images/chadi.gif" height="80px"></image> -->
+
+<!-- <image src="/images/arkam.png" height="80px"></image> -->
+</cell>
+
+<cell>
+<hbox hflex="1" pack="center">
+<label value="${sessionScope.Authentication.exhibitionname}" style="font-size:20px;color:green;font-weight:bold;"></label>
+</hbox>
+</cell>
+
+<cell align="left">
+<!-- <image src="/images/alkalam.png" height="100px"></image> -->
+
+</cell>
+</row>
+</rows>
+</grid>
+</zk>

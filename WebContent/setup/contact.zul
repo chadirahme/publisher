@@ -1,0 +1,58 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<zk>
+<window id="contactDialog" apply="org.zkoss.bind.BindComposer" mode="highlighted" title="Contact" 
+border="normal" position="center,center" closable="true"
+viewModel="@id('vm') @init('setup.SetupViewModel' ,type='contact')"  sizable="true"
+
+onCancel="contactDialog.detach()"
+ width="520px" height="250px">
+  
+<vlayout>
+<grid style="direction: rtl;text-align:right">
+<columns>
+<column width="100px"></column>
+<column width="200px"></column>
+<column width="120px"></column>
+</columns>
+
+<rows>
+
+<row>
+<label>إسم الشخص</label>
+<textbox value="@bind(vm.selectedExhibitionContact.contactname)" hflex="1"></textbox>
+</row>
+
+<row>
+<label> تلفون</label>
+<textbox value="@bind(vm.selectedExhibitionContact.contactphone)" hflex="1"></textbox>
+</row>
+
+<row>
+<label> إيميل</label>
+<textbox value="@bind(vm.selectedExhibitionContact.email)" hflex="1"/>
+
+</row>
+
+<row>
+<label> ملاحظات</label>
+<textbox rows="3" value="@bind(vm.selectedExhibitionContact.note)" hflex="1"/>
+</row>
+
+</rows>
+</grid>
+
+
+
+<hbox hflex="1" pack="center" >
+
+<button label="حفظ" onClick="@command('saveContactCommand')"></button>
+<button label="إغلاق" onClick="contactDialog.detach()"></button>
+
+
+</hbox>
+</vlayout>
+
+
+</window>
+</zk>

@@ -1,0 +1,65 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('setup.SetupViewModel',type='roles')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+		
+			<button label="إضافة دور" onClick="@command('addNewRoleCommand')"></button>
+			
+		  		 <listbox model="@bind(vm.lstCompanyRoles) @template(each.editingStatus ? 'editable' : 'noneditable')"
+		  		   vflex="1" width="500px">
+		  		 
+					<listhead style="direction: rtl;text-align:right">
+						<listheader label="الدور" sort="auto('rolename')" width="150px"/>	
+							<listheader label="تعديل" width="150px"></listheader>
+						<listheader label="حذف" hflex="1"></listheader>	
+					</listhead>
+					<template name="noneditable">
+						<listitem>		
+						<listcell>
+								<label value="@bind(each.rolename)"/>
+							</listcell>	
+							
+							<listcell>
+								<button onClick="@command('changeEditableStatus', row=each)"
+								image="/images/pencil-small.png" width="36px"/>
+							</listcell>
+							
+							<listcell>
+								<button onClick="@command('deleteRoleCommand',row=each)" 
+								image="/images/delete-small.gif" width="36px"/>
+							</listcell>
+							
+							</listitem>
+							</template>
+							
+							<template name="editable">
+						<listitem>		
+						<listcell>
+								<textbox value="@bind(each.rolename)" hflex="1"/>
+							</listcell>	
+							
+							<listcell>
+								<div>
+                        <button
+                            label="حفظ"
+                            onClick="@command('saveRoleCommand', row=each)" />
+                        <button
+                           label="إلغاء"
+                            onClick="@command('changeEditableStatus', row=each)" />
+                    </div>   
+							</listcell>
+							
+						
+							
+							</listitem>
+							</template>
+					</listbox>
+					
+		
+		</vlayout>
+		</center>
+		</borderlayout>
+</zk>

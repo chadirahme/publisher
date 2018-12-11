@@ -1,0 +1,133 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<style>
+.red {
+	background-color:red;
+}
+</style>
+<borderlayout
+apply="org.zkoss.bind.BindComposer" 
+	viewModel="@id('vm') @init('reports.BooksBuyViewModel',type='booksbuy')">
+		<center autoscroll="true" border="none">
+		<vlayout hflex="1" vflex="1">
+		
+		<grid>
+		<columns>
+		<column width="100px"></column>
+		<column width="230px"></column>
+		<column></column>
+		<column></column>
+		<column></column>
+		</columns>
+		
+		<rows>
+		<row>
+		<label value="إختيار المعرض"></label>
+		<listbox mold="select" width="200px"
+		 model="@load(vm.lstExhibitions)" selectedItem="@bind(vm.selectedExhibitions)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.exhibitionname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>				
+		
+		</row>
+					
+		<row>
+		<label value="إسم الدار"></label>
+		<listbox hflex="1" mold="select"
+		 model="@bind(vm.lstAgency)" selectedItem="@bind(vm.selectedAgency)">
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.agencyname)"></listcell>
+				</listitem>
+			</template>
+		</listbox>
+		
+		</row>			
+						
+		<!-- <row>	
+		<label value="ISBN"></label>
+		<textbox hflex="1" value="@bind(vm.bookCode)"></textbox>		
+		</row> -->
+		
+		<row>
+		<label value="إسم الكتاب"></label>
+		<textbox hflex="1" value="@bind(vm.bookName)"></textbox>
+		<button label="بحث" onClick="@command('viewBooksListCommand')"></button>
+		<checkbox label="إظهار المرتجع" checked="@bind(vm.withReturn)"></checkbox>
+		</row>
+		
+		</rows>
+		</grid>
+		
+			
+				<listbox id="lstReport" model="@bind(vm.lstBooks)" vflex="1">
+					<listhead style="direction: rtl;text-align:right">
+											
+					<listheader label="تاريخ الفاتورة" sort="auto('creattionDate')" width="200px"/>	
+					<listheader label="رقم الفاتورة" sort="auto('invoiceprefix')" width="80px"/>	
+											
+						<listheader label="ISBN" sort="auto('bookCode')" width="100px"/>	
+						<listheader label="إسم الكتاب" sort="auto('bookName')" width="300px"/>	
+						<listheader label="إسم الدار" sort="auto('agencyName')" width="200px"/>	
+					
+						<listheader label="الكمية" sort="auto('quantity')" width="80px"></listheader>
+						<listheader label="السعر بعد الحسم" sort="auto('discountPrice')" width="80px"></listheader>	
+						<listheader label="السعر" sort="auto('price')" width="80px"></listheader>	
+					
+						<listheader label="الحالة" sort="auto('statusName')" width="100px"></listheader>	
+										
+						
+						
+					</listhead>
+					<template name="model">
+						<listitem zclass="@bind(each.invoicestatus eq 4 ? 'red' :'')">		
+						<listcell>
+								<label value="@bind(each.creattionDate)"/>
+							</listcell>	
+							<listcell>
+								<label value="@bind(each.invoiceprefix)"/>
+							</listcell>	
+							<listcell>
+								<label value="@bind(each.bookCode)"/>
+							</listcell>	
+							
+							<listcell>
+								<label value="@bind(each.bookName)"/>
+							</listcell>
+										
+										<listcell>
+								<label value="@bind(each.agencyName)"/>
+							</listcell>												
+						
+							<listcell>
+								<label value="@bind(each.quantity)"/>
+							</listcell>	
+							
+							<listcell>
+								<label value="@bind(each.discountPrice)"/>
+							</listcell>	
+							
+							<listcell>
+								<label value="@bind(each.price)"/>
+							</listcell>	
+							
+							<listcell>
+								<label value="@bind(each.statusName)"  />
+							</listcell>	
+							
+							
+		
+						</listitem>
+					</template>
+				</listbox>
+				
+				<hbox hflex="1" pack="center">				
+				 <button label="Excel" onClick="@command('exportToExcel')"></button>
+				</hbox>
+				</vlayout>
+				</center>
+</borderlayout>
+</zk>
